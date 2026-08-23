@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Neon Hand Aura — Real-Time AI Demo</title>
+  <meta name="description" content="A futuristic real-time webcam demo with neon rainbow hand-tracking overlays powered by MediaPipe Hands." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Scanline overlay -->
+  <div class="scanlines" aria-hidden="true"></div>
+
+  <!-- Main stage -->
+  <div id="stage">
+    <video id="webcam" autoplay muted playsinline></video>
+    <canvas id="overlay"></canvas>
+  </div>
+
+  <!-- HUD Panel -->
+  <div id="hud" role="status" aria-live="polite">
+    <div class="hud-title">
+      <span class="hud-dot"></span>
+      NEON HAND AURA
+      <span class="hud-badge">LIVE</span>
+    </div>
+
+    <div class="hud-grid">
+      <div class="hud-cell">
+        <div class="hud-label">HANDS DETECTED</div>
+        <div class="hud-value" id="hud-hands">0</div>
+      </div>
+      <div class="hud-cell">
+        <div class="hud-label">CONFIDENCE</div>
+        <div class="hud-value" id="hud-conf">—</div>
+      </div>
+      <div class="hud-cell">
+        <div class="hud-label">FPS</div>
+        <div class="hud-value" id="hud-fps">0</div>
+      </div>
+      <div class="hud-cell">
+        <div class="hud-label">HANDEDNESS</div>
+        <div class="hud-value" id="hud-handedness">—</div>
+      </div>
+    </div>
+
+    <div class="hud-bar-row">
+      <span class="hud-label">SIGNAL</span>
+      <div class="hud-bar-track">
+        <div class="hud-bar-fill" id="hud-signal"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Corner logo watermark -->
+  <div id="watermark" aria-hidden="true">
+    <span class="wm-bracket">[</span>
+    AI<span class="wm-accent">·</span>VISION
+    <span class="wm-bracket">]</span>
+  </div>
+
+  <!-- Loading / error overlay -->
+  <div id="loading-screen">
+    <div class="ls-content">
+      <div class="ls-spinner"></div>
+      <div class="ls-title">INITIALIZING</div>
+      <div class="ls-sub" id="ls-message">Requesting camera access…</div>
+    </div>
+  </div>
+
+  <!-- MediaPipe via CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+  <script src="app.js"></script>
+</body>
+</html>
