@@ -2,6 +2,9 @@
 
 Control your computer's mouse with your hand in front of a webcam.
 
+Live demo: https://hand-project-mu.vercel.app
+(tracking only, see the limits section below)
+
 The browser tracks your hand with MediaPipe Hands, draws a neon rainbow skeleton over the video feed, and translates finger poses into gestures. A small Python server receives those gestures over a WebSocket and drives the real system cursor with PyAutoGUI.
 
 ## What it does
@@ -48,6 +51,8 @@ python -m http.server 8080
 ```
 
 Open http://localhost:8080 in your browser and allow camera access. The page connects to the server automatically and retries every two seconds if the server is not up yet.
+
+On Windows, if `python` is not recognised, use the `py` launcher instead, for example `py server.py` and `py -m http.server 8080`.
 
 Opening `index.html` straight from the filesystem will not work. Browsers block camera access on `file://` URLs, so the page has to be served over HTTP.
 
