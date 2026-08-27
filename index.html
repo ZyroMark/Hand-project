@@ -3,78 +3,84 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Neon Hand Aura — Real-Time AI Demo</title>
-  <meta name="description" content="A futuristic real-time webcam demo with neon rainbow hand-tracking overlays powered by MediaPipe Hands." />
+  <title>Hand Aura</title>
+  <meta name="description" content="Webcam hand tracking with five modes: system cursor control, a hand physics playground, a slicing game, air painting, and an interactive lesson on how the tracking works." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500;600;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <!-- Scanline overlay -->
-  <div class="scanlines" aria-hidden="true"></div>
-
-  <!-- Main stage -->
   <div id="stage">
     <video id="webcam" autoplay muted playsinline></video>
+    <div id="scrim" aria-hidden="true"></div>
     <canvas id="overlay"></canvas>
   </div>
 
-  <!-- HUD Panel -->
+  <div class="grain-layer" aria-hidden="true"></div>
+
+  <!-- Telemetry -->
   <div id="hud" role="status" aria-live="polite">
     <div class="hud-title">
       <span class="hud-dot"></span>
-      NEON HAND AURA
-      <span class="hud-badge">LIVE</span>
+      <span class="hud-name">HAND AURA</span>
+      <span class="hud-badge" id="hud-mode">PHYSICS</span>
     </div>
 
     <div class="hud-grid">
       <div class="hud-cell">
-        <div class="hud-label">HANDS DETECTED</div>
+        <div class="hud-label">Hands</div>
         <div class="hud-value" id="hud-hands">0</div>
       </div>
       <div class="hud-cell">
-        <div class="hud-label">CONFIDENCE</div>
-        <div class="hud-value" id="hud-conf">—</div>
+        <div class="hud-label">Confidence</div>
+        <div class="hud-value" id="hud-conf">0%</div>
       </div>
       <div class="hud-cell">
         <div class="hud-label">FPS</div>
         <div class="hud-value" id="hud-fps">0</div>
       </div>
       <div class="hud-cell">
-        <div class="hud-label">HANDEDNESS</div>
-        <div class="hud-value" id="hud-handedness">—</div>
+        <div class="hud-label">Gesture</div>
+        <div class="hud-value small" id="hud-gesture">NONE</div>
       </div>
     </div>
 
     <div class="hud-bar-row">
-      <span class="hud-label">SIGNAL</span>
+      <span class="hud-label">Signal</span>
       <div class="hud-bar-track">
         <div class="hud-bar-fill" id="hud-signal"></div>
       </div>
     </div>
   </div>
 
-  <!-- Corner logo watermark -->
-  <div id="watermark" aria-hidden="true">
-    <span class="wm-bracket">[</span>
-    AI<span class="wm-accent">·</span>VISION
-    <span class="wm-bracket">]</span>
+  <!-- Top right controls -->
+  <div id="topright">
+    <div id="themebar" role="group" aria-label="Theme"></div>
+    <button id="help-open" title="Controls (H)" aria-label="Show controls">?</button>
   </div>
 
-  <!-- Loading / error overlay -->
+  <!-- Mode switcher, filled in by app.js -->
+  <nav id="modebar" aria-label="Modes"></nav>
+
+  <aside id="help">
+    <button id="help-close" aria-label="Close controls">Close</button>
+    <div id="help-body"></div>
+  </aside>
+
+  <div id="toast" role="status" aria-live="polite"></div>
+
   <div id="loading-screen">
     <div class="ls-content">
       <div class="ls-spinner"></div>
-      <div class="ls-title">INITIALIZING</div>
-      <div class="ls-sub" id="ls-message">Requesting camera access…</div>
+      <div class="ls-title">Hand Aura</div>
+      <div class="ls-sub" id="ls-message">Requesting camera access</div>
     </div>
   </div>
 
-  <!-- MediaPipe via CDN -->
+  <!-- MediaPipe globals, loaded before the module so app.js can see them -->
   <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
-  <script src="app.js"></script>
+  <script type="module" src="js/app.js"></script>
 </body>
 </html>

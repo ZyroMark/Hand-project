@@ -1,5 +1,5 @@
 """
-Neon Hand Aura — Mouse Control Server
+Hand Aura - Mouse Control Server
 Run this FIRST, then open the browser.
 
 Install:  pip install pyautogui websockets
